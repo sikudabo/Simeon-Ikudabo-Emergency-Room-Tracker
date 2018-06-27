@@ -1,0 +1,1002 @@
+#: import WipeTransition kivy.uix.screenmanager.WipeTransition
+
+
+<Button>:
+	font_size: 30
+	background_normal: 'button_normal.png'
+	background_down: 'button_normal.png'
+	border: (2, 2, 2, 2)
+
+<Label>:
+	font_size: 25
+
+<InfoLabel@Label>:
+	color: 0, 0, 1, 1
+	text_size: (self.width, None)
+	halign: 'left'
+	valign: 'top'
+	size_hint: (1, None)
+	height: self.texture_size[1]
+	markup: True
+
+<ScrollView>:
+	canvas.before:
+		Color: 
+			rgb: 1, 1, 1
+
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
+<ChatLabel@Label>:
+	color: 0, 0, 1, 1
+	text_size: (self.width, None)
+	halign: 'left'
+	valign: 'top'
+	size_hint: (1, None)
+	height: self.texture_size[1]
+	markup: True 
+
+
+ScreenManager:
+	transition: WipeTransition()
+
+	Screen:
+		name: 'Welcome'
+
+		BoxLayout:
+			canvas:
+				Rectangle:
+					size: self.size
+					pos: self.pos
+					source: 'mgh_welcome.jpg'
+
+	Screen:
+		name: 'Options'
+
+		BoxLayout:
+			orientation: 'vertical'
+			canvas:
+				Rectangle:
+					pos: self.pos
+					size: (0.5, 0.5)
+					source: 'mgh_staff.jpg'
+
+			GridLayout:
+				rows: 3
+				cols: 3
+				padding: 10
+				spacing: 10
+
+				Button: 
+					text: 'Create Account'
+					on_press: app.root.current = 'Create'
+
+				Button:
+					text: 'Er Sign In'
+					on_press: app.root.current = 'Er_Login'
+
+				Button:
+					text: 'Check BMI'
+					on_press: app.root.current = 'Track_BMI'
+
+				Button: 
+					text: 'General Information'
+					on_press: app.root.current = 'General_Information'
+
+				Button: 
+					text: 'How To Use?'
+
+				Button:
+					text: 'Chat With Doctor'
+					on_press: app.root.current = 'Chat Login'
+
+				Button:
+					text: 'Hospital News'
+
+
+				Button:
+					text: 'Return User'
+					on_press: app.root.current = 'Return_User_Screen'
+
+				Button:
+					text: 'Symptoms Checker'
+					on_press: app.root.current = 'Symptoms_Check'
+	#---------------------------------------------------------------------------------------------------------------------------
+	
+	Screen:
+		name: 'Create'
+		#Screen that will enable the user to create a new account. 
+
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: 10
+			padding: 10
+
+			Label:
+				text: 'Please choose a username and password!'
+				id: new_user_status 
+
+			GridLayout:
+				rows: 2
+				cols: 2
+
+				Label:
+					text: 'Username: '
+
+				TextInput:
+					text: ''
+					id: new_username
+					multiline: False
+
+				Label:
+					text: 'Password: '
+
+				TextInput:
+					text: ''
+					id: new_password
+					multiline: False 
+
+			Button:
+				text: 'Enter'
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+				on_press: app.create_username_password()
+
+			Button:
+				text: 'Temp Button'
+				on_press: app.root.current = 'New_Name_Info'
+	#----------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'New_Name_Info'
+		#Screen that will get a users real first/lastname/ssn/birthdate
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: ''
+				id: new_name_status 
+
+			GridLayout:
+				row: 4
+				cols: 2
+				spacing: 10
+				padding: 10
+
+				Label:
+					text: 'First Name:'
+
+				TextInput:
+					text: ''
+					id: new_first_name
+
+				Label:
+					text: 'Last Name: '
+
+				TextInput:
+					text: ''
+					id: new_last_name
+
+				Label:
+					text: 'Birth Day (month-day-year format): '
+
+				TextInput:
+					text: ''
+					id: new_birthdate 
+
+				Label:
+					text: 'SSN: '
+
+				TextInput:
+					text: ''
+					id: new_ssn
+
+			Button:
+				text: 'Enter'
+				background_down: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.create_new_real_name()
+	#--------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'New_Health_Info'
+		#Screen that will help store a patients new health information
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: ''
+				id: new_health_info_status
+
+			GridLayout:
+				rows: 7
+				cols: 2
+
+				Label:
+					text: 'Prior Medical Conditions: '
+
+				TextInput:
+					text: ''
+					id: new_prior_conditions
+
+				Label:
+					text: 'Current Medical Conditions: '
+
+				TextInput:
+					text: ''
+					id: new_current_conditions
+
+				Label:
+					text: 'Current Medications'
+
+				TextInput:
+					text: ''
+					id: new_current_medications
+
+				Label:
+					text: 'Prior Medications'
+
+				TextInput:
+					text: ''
+					id: new_prior_medications
+
+				Label:
+					text: 'Prior Sugeries: '
+
+				TextInput:
+					text: ''
+					id: new_prior_surgeries 
+
+				Label:
+					text: 'Allergies: '
+
+				TextInput:
+					text: ''
+					id: new_allergies
+
+				Label:
+					text:'Insurance Provider: '
+
+				TextInput:
+					text: ''
+					id: new_insurance_provider
+
+			Button:
+				text: 'Enter'
+				on_press: app.new_health_info()
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+	#--------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'New_Contact'
+		#Screen that will enable the user to store their contact info. Phone Number, Email, and Address
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Contact Info'
+				id: new_contact_status 
+
+			GridLayout:
+				rows: 6
+				cols: 2
+				spacing: 10
+				padding: 10
+
+				Label:
+					text: 'Phone Number: ex- +17655068385'
+
+				TextInput:
+					text: ''
+					id: new_phone_number
+
+				Label:
+					text: 'Email: '
+
+				TextInput:
+					text: ''
+					id: new_email
+
+				Label:
+					text: 'Address'
+				
+				TextInput:
+					id: new_address
+
+
+				Label:
+					text: 'City'
+
+				TextInput:
+					text: ''
+					id: new_city
+
+				Label:
+					text: 'State'
+
+				TextInput:
+					text: ''
+					id: new_state
+
+				Label:
+					text: 'Zip'
+
+				TextInput:
+					text:''
+					id: new_zip
+
+			Button:
+				text: 'Enter'
+				background_down: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.new_contact_info()
+	#--------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Return_User_Screen'
+		#Screen that retrieves all of the data for a return user. 
+
+		BoxLayout:
+			orientation: 'vertical'
+			padding: 10
+			spacing: 10
+
+			Label: 
+				text: 'Enter your return information'
+				id: return_user_status
+
+			GridLayout:
+				rows: 2
+				cols: 2
+
+				Label:
+					text: 'Username: '
+
+				TextInput:
+					text: ''
+					id: return_username
+
+				Label:
+					text: 'Password: '
+
+				TextInput:
+					text: ''
+					id: return_password
+
+			Button:
+				text: 'Sign In:'
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+				on_press: app.return_user_signin()
+
+			Button:
+				text: 'Retrieve Data'
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+				on_press: app.retrieve_data()
+	#--------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Stored_Info'
+		#Screen that allows the user to review their information that has been stored. 
+
+		BoxLayout:
+			padding: 10
+			spacing: 10
+			orientation: 'vertical'
+
+			Label:
+				text: 'Patient info for: '
+				id: patient_info_status 
+
+			ScrollView:
+				InfoLabel:
+					id: patient_info_retrieved 
+					text: ''
+
+			BoxLayout:
+				size_hint: (1, None)
+				orientation: 'horizontal'
+				spacing: 10
+				padding: 10
+				
+				Button:
+					text: 'Alter Info'
+					background_down: 'red_button_down.png'
+					background_normal: 'red_button_down.png'
+					on_press: app.root.current = 'Alter_Data'
+
+				Button:
+					text: 'Go back'
+					background_down: 'red_button_down.png'
+					background_normal: 'red_button_down.png'
+	#---------------------------------------------------------------------------------------------------------------
+	
+	Screen:
+		name: 'Alter_Data'
+		#Screen that will allow the user to select an option to alter their data in the database. 
+		GridLayout:
+			rows: 8
+			cols: 2
+
+			Button:
+				text: 'Edit Current Conditions'
+				on_press: app.root.current = 'Alter_Conditions'
+
+			Button:
+				text: 'Edit Current Medications'
+				on_press: app.root.current = 'Alter_Medications'
+
+			Button:
+				text: 'Edit Surgeries'
+				on_press: app.root.current = 'Alter_Surgeries'
+
+			Button:
+				text: 'Edit Allergies'
+				on_press: app.root.current = 'Alter_Allergies'
+
+			Button:
+				text: 'Edit Insurance'
+				on_press: app.root.current = 'Alter_Insurance'
+
+			Button:
+				text: 'Edit Phone'
+				on_press: app.root.current = 'Alter_Phone'
+
+			Button:
+				text: 'Edit Email'
+				on_press: app.root.current = 'Alter_Email'
+
+			Button:
+				text: 'Edit Address'
+				on_press: app.root.current = 'Alter_Address'
+	#----------------------------------------------------------------------------------------------------------------
+	
+	Screen:
+		name: 'Alter_Conditions'
+		#Screen that will allow the user to edit their current conditions
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Current Conditions'
+
+			TextInput:
+				text: ''
+				id: alter_current_conditions
+
+			Button:
+				text:'Change'
+				background_normal: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.alter_conditions()
+			
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#-------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Alter_Medications'
+		#Screen that will allow the user to edit their current medications 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Current Medications'
+
+			TextInput:
+				text: ''
+				id: alter_current_medications 
+
+			Button:
+				text:'Change'
+				background_normal: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.alter_medications()
+			
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#-------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Alter_Surgeries'
+		#Screen that will allow the user to edit their surgeries 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Surgeries'
+
+			TextInput:
+				text: ''
+				id: alter_surgeries 
+
+			Button:
+				text:'Change'
+				background_normal: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.alter_surgeries()
+			
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#---------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Alter_Allergies'
+		#Screen that will allow the user to edit their allergies
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Allergies'
+
+			TextInput:
+				text: ''
+				id: alter_allergies
+
+			Button:
+				text:'Change'
+				background_normal: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.alter_allergies()
+			
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#--------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Alter_Insurance'
+		#Screen that will allow the user to edit their insurance
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Current Insurance'
+
+			TextInput:
+				text: ''
+				id: alter_insurance 
+
+			Button:
+				text:'Change'
+				background_normal: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.alter_insurance()
+			
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#-------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Alter_Phone'
+		#Screen that will allow the user to edit their phone number.
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Phone Number'
+
+			TextInput:
+				text: ''
+				id: alter_phone 
+
+			Button:
+				text:'Change'
+				background_normal: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.alter_phone()
+			
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Alter_Email'
+		#Screen that will allow the user to edit their email address.
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Email Address'
+
+			TextInput:
+				text: ''
+				id: alter_email 
+
+			Button:
+				text:'Change'
+				background_normal: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.alter_email()
+			
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#-------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Alter_Address'
+		#Screen that will allow the user to edit their address.
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Update Address'
+
+			GridLayout:
+				rows: 4
+				cols: 2
+
+				Label:
+					text: 'Address: '
+
+				TextInput:
+					text: ''
+					id: update_address
+
+				Label:
+					text: 'City: '
+
+				TextInput:
+					text: ''
+					id: update_city
+
+				Label:
+					text: 'State: '
+
+				TextInput:
+					text: ''
+					id: update_state
+
+				Label:
+					text: 'Zip: '
+
+				TextInput:
+					text: ''
+					id: update_zip
+
+			Button:
+				text: 'Change'
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+				on_press: app.alter_email()
+
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#--------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Er_Login'
+		#Screen that will enable the patient to sign into the ER.
+		#Patient can list symptoms and then give a brief description of symptoms. 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'ER SIGN IN'
+
+			GridLayout:
+				rows: 2
+				cols: 2
+
+				Label:
+					text: 'List your primary symptoms: '
+					id: er_login_status
+
+				TextInput:
+					text: ''
+					id: er_symptoms 
+
+				Label:
+					text: 'Give a brief description of what brings you in today: '
+
+				ScrollView:
+					TextInput:
+						text: ''
+						id: er_brief_description
+
+			Button:
+				text: 'Continue'
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+				#on_press: app.er_login()
+				on_press: app.root.current = 'Select_Appointment'
+
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#-------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name:'Select_Appointment'
+		#Screen that will allow the patient to select a particular appointment time. 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Select Appointment Time/Date'
+				id: select_appointment_error
+
+			Button:
+				text: 'Get Times'
+				on_press: app.select_appointment()
+
+			GridLayout:
+				rows: 4
+				cols: 1
+
+				Button:
+					text:''
+					id: time_1
+					on_press: app.button1_selection()
+
+				Button:
+					text: ''
+					id: time_2
+					on_press: app.button2_selection()
+
+				Button:
+					text: ''
+					id: time_3
+					on_press: app.button3_selection()
+
+				Button:
+					text: ''
+					id: time_4
+					on_press: app.button4_selection()
+	#--------------------------------------------------------------------------------------------------------------------------
+	
+	Screen:
+		name:'Countdown_Timer'
+		#Screen that will allow the patient to see the amount of time until their appointment. 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Countdown Time'
+
+			GridLayout:
+				rows: 1
+				cols: 1
+
+				Label:
+					text: ''
+					id:countdown_label
+
+			Button:
+				text: 'Back'
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+				on_press: app.root.current = 'Options'
+	#--------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Track_BMI'
+		#Screen that will enable the patient to track their BMI
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Track BMI'
+				id: bmi_label
+
+			GridLayout:
+				row: 2
+				cols: 2
+
+				Label:
+					text: 'What is your weight in pounds?'
+
+				TextInput:
+					text: ''
+					id: weight
+
+				Label:
+					text: 'What is your height in inches?'
+
+				TextInput:
+					text:''
+					id: height
+
+			Button:
+				text: 'Calculate'
+				background_normal: 'red_button_down.png'
+				background_down: 'red_button_down.png'
+				on_press: app.calc_bmi()
+
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#--------------------------------------------------------------------------------------------------------------------------
+	
+	Screen:
+		name: 'General_Information'
+		#A Screen that the patient can go to in order to get general health information. They should be able to click a button.
+		#, and receive general health information and tips. 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			ScrollView:
+				GridLayout:
+					rows: 2
+					cols: 1
+					
+						
+					Button: 
+						text: 'Go Back'
+						on_press: app.root.current = 'Options'
+						
+					Button:
+						text: 'Immunization'
+						on_press: app.root.current = 'Immunization_Screen'
+						on_release: app.immunization()
+
+	Screen:
+		name: 'Immunization_Screen'
+		#A page that will give the patient information on why immunization is critical. A link to the CDC page 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+		
+			ScrollView:
+				ChatLabel:
+					id: immunization_label
+					text: ''
+
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'General_Information'
+	#--------------------------------------------------------------------------------------------------------------------------
+
+
+
+	Screen:
+		name: 'Chat Login'
+		#Screen that will allow patients to chat with doctors. 
+		#On this screen just have the patient select a doctor 
+		#, to chat with. 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Patient/Doctor Chat'
+
+			Label:
+				text: ''
+				id: chat_login_label
+
+			GridLayout:
+				rows: 1
+				cols: 2
+				row_default_height: 90
+				row_force_default: True 
+				spacing: 10
+
+				Label:
+					text: 'Enter Doctors Name: '
+
+				TextInput:
+					text: ''
+					id: dr_chat_peer 
+
+			Button:
+				text: 'Start Chat'
+				background_down: 'red_button_down.png'
+				background_normal: 'red_button_down.png'
+				on_press: app.connect()
+
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+	#-------------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Chat Room'
+		#Screen that we switch to that allows the patient to actually chat with the doctor. 
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Button:
+				text: 'Disconnect'
+				on_press: app.root.current = 'Options'
+				on_press: app.disconnect()
+
+			ScrollView:
+				ChatLabel:
+					text: 
+					id: chat_logs 
+
+			BoxLayout:
+				size_hint: (1, None)
+				orientation: 'horizontal'
+				spacing: 10
+				padding: 10
+
+				TextInput:
+					text: ''
+					id: patient_msg 
+					mutiline: False 
+
+				Button:
+					text: 'Send'
+					size_hint: (1, 1)
+					background_normal: 'red_button_down.png'
+					background_down: 'red_button_down.png'
+					on_press: app.send_msg()
+	#-----------------------------------------------------------------------------------------------------------------------
+
+	Screen:
+		name: 'Symptoms_Check'
+
+		BoxLayout:
+			orientation: 'vertical'
+
+			Label:
+				text: 'Check Symptoms!'
+
+			Button:
+				text: 'Back'
+				on_press: app.root.current = 'Options'
+
+			ScrollView:
+				ChatLabel:
+					id: q_logs
+					text: ''
+
+			BoxLayout:
+				orientation: 'horizontal'
+
+				TextInput:
+					text: ''
+					id: ask_q
+
+				Button:
+					text: 'Ask'
+					background_normal: 'red_button_down.png'
+					background_down: 'red_button_down.png'
+					on_press: app.ask_symptom_question()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
